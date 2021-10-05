@@ -1,11 +1,28 @@
 <html>
-    <head>
-        <title>Parking</title>
-    </head>
-    <body>
-        <form method="get" action="/ui/parking">
-            <input name="number" value="" type="text"/>
-            <input type="submit" name="print" value="ticket">
-        </form>
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Parking</title>
+    <style>
+        form {
+          position: fixed; top: 70%; left: 50%;
+          width:250px;
+        }
+
+        h1 {
+        position: fixed; top: 50%; left: 46%;
+          width:400px
+        }
+    </style>
+
+</head>
+    <body background="images/background.jpg">
+        <h1 align="center" class="text-warning" >WELCOME TO OUR PARKING</h1>
+            <div >
+                <form class="form-inline" method="get" action="/ui/parking" >
+                    <input name="number" value="" type="text"/>
+                    <input type="submit" name="print" value="ticket">
+                </form>
+            </div>
     </body>
 </html>
