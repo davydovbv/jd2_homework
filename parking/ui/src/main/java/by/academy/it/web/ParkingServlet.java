@@ -3,10 +3,7 @@ package by.academy.it.web;
 import by.academy.it.controller.Printer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -26,6 +23,7 @@ public class ParkingServlet extends HttpServlet {
             HttpSession session = req.getSession();
             Date currentDate = new Date();
             String number = req.getParameter("number");
+            addParkingCookies(resp, number);
             if (map.containsKey(number)) {
                 Date startDate = map.remove(number);
                 long seconds = (currentDate.getTime() - startDate.getTime()) / 1000;
@@ -39,6 +37,7 @@ public class ParkingServlet extends HttpServlet {
             }
             writer.println("Car Number: " + number);
             session.setAttribute("number", number);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,5 +46,11 @@ public class ParkingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);
+    }
+
+    private void addParkingCookies(HttpServletResponse resp, String number) {
+        Cookie cookie = new Cookie("PLATENUMBER", number);
+        cookie.setMaxAge(300);
+        resp.addCookie(cookie);
     }
 }
