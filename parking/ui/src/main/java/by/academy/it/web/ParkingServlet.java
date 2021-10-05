@@ -1,26 +1,44 @@
 package by.academy.it.web;
 
+import by.academy.it.controller.Printer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet(name = "parkingServlet", urlPatterns = "/parking")
 public class ParkingServlet extends HttpServlet {
 
+    private final Map<String, Date> map = new HashMap<>();
+
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
-            String number = req.getParameter("number");
             PrintWriter writer = resp.getWriter();
-            writer.println("Welcome to our Parking!");
-            writer.println(new Date());
+            HttpSession session = req.getSession();
+            Date currentDate = new Date();
+            String number = req.getParameter("number");
+            if (map.containsKey(number)) {
+                Date startDate = map.remove(number);
+                long seconds = (currentDate.getTime() - startDate.getTime()) / 1000;
+                writer.println("You stayed in our parking: ");
+                writer.println(seconds + " seconds");
+            } else {
+                map.put(number,currentDate);
+                writer.println("Welcome to our Parking!");
+                writer.println(currentDate);
+                writer.println("Car Number: " + number);
+            }
             writer.println("Car Number: " + number);
+            session.setAttribute("number", number);
         } catch (IOException e) {
             e.printStackTrace();
         }
