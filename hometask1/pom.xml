@@ -4,17 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <modules>
+        <module>task8</module>
+        <module>task9</module>
+        <module>task10</module>
+        <module>task11</module>
+        <module>task12</module>
+    </modules>
+
     <groupId>by.academy.it</groupId>
     <artifactId>hometask1</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>theme2/task8</module>
-        <module>theme2/task9</module>
-        <module>theme3/task10</module>
-        <module>theme3/task11</module>
-        <module>theme3/task12</module>
-    </modules>
 
     <dependencies>
         <dependency>
