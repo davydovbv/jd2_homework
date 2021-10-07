@@ -6,7 +6,7 @@
          version="4.0">
     <context-param>
         <param-name>logFilePath</param-name>
-        <param-value>D:\java\projects\jd2_homework\access-account.txt</param-value>
+        <param-value>.\access-account.txt</param-value>
     </context-param>
     
 </web-app>
