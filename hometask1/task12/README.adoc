@@ -1,0 +1,6 @@
+= Access to page counter
+
+== To specify path for a file to save number of accesses :
+
+* go to : `./hometask1/task12/src/main/webapp/WEB-INF/web.xml`
+* set context parameter `logFilePath` value to the preferred one: `directory/fileName`
