@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.*;
 
@@ -17,15 +18,25 @@ public class AccessCounterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PrintWriter pw = resp.getWriter();
         fileName = getServletContext().getInitParameter("logFilePath");
-        int count;
-        if (readCount() == null) {
-            count = 0;
+        File file = new File(fileName.substring(0,fileName.lastIndexOf("\\")));
+        if(file.exists()) {
+            int count;
+            if (readCount() == null) {
+                count = 0;
+            } else {
+                count = readCount();
+            }
+            count++;
+            writeCount(count);
+            pw.println("<h1 align='center'>Count " + count + "</h1>");
         } else {
-            count = readCount();
+            try {
+                throw new FileNotFoundException();
+            } catch (FileNotFoundException e) {
+                pw.println("<h1 align='center'>" + "Wrong log file specified" + "</h1>");
+                pw.println("<h1 align='center'>" + "Chek configuration and try again" + "</h1>");
+            }
         }
-        count++;
-        writeCount(count);
-        pw.println("<h1 align='center'>Count " + count + "</h1>");
 
     }
 

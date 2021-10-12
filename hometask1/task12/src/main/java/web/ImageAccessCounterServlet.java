@@ -18,23 +18,34 @@ public class ImageAccessCounterServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("image/jpeg");
-        ServletOutputStream out = resp.getOutputStream();
         fileName = getServletContext().getInitParameter("logFilePath");
-        BufferedImage image = new BufferedImage(500, 200, BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics = image.createGraphics();
-        graphics.setFont(new Font("Serif", Font.ITALIC, 100));
-        graphics.setColor(Color.GREEN);
-        int count;
-        if (readCount() == null) {
-            count = 0;
+        File file = new File(fileName.substring(0, fileName.lastIndexOf("\\")));
+        if (file.exists()) {
+            resp.setContentType("image/jpeg");
+            BufferedImage image = new BufferedImage(500, 200, BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics = image.createGraphics();
+            graphics.setFont(new Font("Serif", Font.ITALIC, 100));
+            graphics.setColor(Color.GREEN);
+            int count;
+            if (readCount() == null) {
+                count = 0;
+            } else {
+                count = readCount();
+            }
+            ServletOutputStream out = resp.getOutputStream();
+            count++;
+            graphics.drawString(String.valueOf(count), 200, 130);
+            writeCount(count);
+            ImageIO.write(image, "jpeg", out);
         } else {
-            count = readCount();
+            PrintWriter pw = resp.getWriter();
+            try {
+                throw new FileNotFoundException();
+            } catch (FileNotFoundException e) {
+                pw.println("<h1 align='center'>" + "Wrong log file specified" + "</h1>");
+                pw.println("<h1 align='center'>" + "Chek configuration and try again" + "</h1>");
+            }
         }
-        count++;
-        graphics.drawString(String.valueOf(count), 200, 130);
-        writeCount(count);
-        ImageIO.write(image, "jpeg", out);
     }
 
     private static Integer readCount() {
