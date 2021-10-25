@@ -50,7 +50,7 @@ public class ExpenseDto {
 
     @Override
     public String toString() {
-        return  "|" + id +
+        return "|" + id +
                 "|" + date + '|' +
                 "|" + receiver +
                 "|" + value + "|";
