@@ -24,4 +24,15 @@ public class ReceiverDao {
         connection.close();
         return receivers;
     }
+
+    public void insertDefaultReceiver() throws SQLException {
+        Connection connection = dataSource.getConnection();
+        ResultSet resultSet = connection.createStatement().executeQuery("SELECT COUNT(*) AS 'lines' FROM receivers ");
+        if (resultSet.next()) {
+            int rows = resultSet.getInt("lines");
+            if (rows == 0) {
+                connection.createStatement().executeUpdate("INSERT INTO receivers (name) VALUES ('DEFAULT_RECEIVER')");
+            }
+        }
+    }
 }

@@ -1,4 +1,4 @@
-= Task 4 Application
+= Task 5 Application
 
 == Run
 
@@ -15,5 +15,5 @@ Edit `run.bat` file:
 * final version of file should look like this:
 
 ----
-java -jar "D:\java\projects\jd2_homework\hometask2\task4\target\task4.jar" "2020-11-12" 1 12345
+java -jar "D:\java\projects\jd2_homework\hometask2\task4\target\task5.jar" "2020-11-12" 1 12345
 ----
