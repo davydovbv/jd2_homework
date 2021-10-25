@@ -1,21 +1,21 @@
-import exceptions.ConsoleArgumentsException;
 import dao.ExpensesDao;
-import utils.CommandLineArgumentsProcessor;
+import dto.SumOfExpensesOnDateWithBiggestExpenseDto;
 
 import java.sql.SQLException;
-import java.text.ParseException;
 
 public class Main {
     public static void main(String[] args) {
         try {
             ExpensesDao expensesDao = new ExpensesDao();
-            expensesDao.addNewExpense(CommandLineArgumentsProcessor.processToExpenseDto(args));
-            System.out.println("|id| paydate |receiver|value|");
-            expensesDao.getAllExpenses().forEach(e -> {
-                System.out.println(e.toString());
-            });
-        } catch (ClassNotFoundException | ConsoleArgumentsException | SQLException | ParseException e) {
-            System.out.println(e.getMessage());
+            System.out.println("|Receivers| SUM |");
+            expensesDao.getReceiversWithExpenses().forEach(e -> System.out.println(e.toString()));
+            System.out.println("\n");
+            SumOfExpensesOnDateWithBiggestExpenseDto sum = expensesDao.getSumOfExpensesOnDateWithBiggestExpense();
+            System.out.println(sum.toString());
+            double expense = expensesDao.getBiggestExpenseForDayWithBiggestSum();
+            System.out.println("\nBiggestExpenseForDayWithBiggestSum - " + expense);
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
         }
     }
 }

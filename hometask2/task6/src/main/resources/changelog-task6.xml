@@ -15,14 +15,57 @@
             PRIMARY KEY (id)
             );
 
-            CREATE TABLE IF NOT EXISTS recievers (
+            CREATE TABLE IF NOT EXISTS receivers (
                 id INT NOT NULL AUTO_INCREMENT,
                 name VARCHAR(255),
                 PRIMARY KEY (id)
             );
 
             INSERT INTO receivers(name)
-                VALUE ('DEFAULT_RECEIVER');
+                VALUE ('GENNADIY');
+            INSERT INTO receivers(name)
+                VALUE ('PETER');
+            INSERT INTO receivers(name)
+                VALUE ('TOLIK');
+
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-24',1,3000.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-24',1,2000.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-24',1,3100.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-25',1,3000.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-25',1,3100.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-25',1,2100.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-24',2,3100.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-24',2,3200.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-24',2,3300.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-25',2,2900.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-25',2,2800.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-25',2,2700.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-24',3,3200.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-24',3,2900.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-24',3,2800.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-25',3,3100.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-25',3,2850.0);
+            INSERT INTO expenses(paydate, receiver, value)
+            VALUES ('2021-10-25',3,3250.0);
+
+
         </sql>
     </changeSet>
 

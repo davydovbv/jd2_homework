@@ -1,6 +1,8 @@
 package dao;
 
 import dto.ExpenseDto;
+import dto.ExpensesWithReceiversDto;
+import dto.SumOfExpensesOnDateWithBiggestExpenseDto;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -17,25 +19,57 @@ public class ExpensesDao {
         this.dataSource = new DataSource();
     }
 
-    public void addNewExpense(ExpenseDto expenseDto) throws SQLException {
+    public SumOfExpensesOnDateWithBiggestExpenseDto getSumOfExpensesOnDateWithBiggestExpense() throws SQLException {
         Connection connection = dataSource.getConnection();
-        String query = "INSERT INTO expenses(paydate, receiver, value) VALUES ('" +  expenseDto.getDate()  + "', " +
-                expenseDto.getReceiver() + ", " + expenseDto.getValue() + ")";
-        Statement st = connection.createStatement();
-        st.executeUpdate(query);
+        String query = "SELECT paydate, SUM(value) as S " +
+                "FROM expenses " +
+                "WHERE paydate IN (SELECT paydate " +
+                "                 FROM expenses " +
+                "                 WHERE value = (SELECT MAX(value) FROM expenses)) " +
+                "GROUP BY paydate";
+        ResultSet resultSet = connection.createStatement().executeQuery(query);
+        SumOfExpensesOnDateWithBiggestExpenseDto sum = new SumOfExpensesOnDateWithBiggestExpenseDto();
+        if (resultSet.next()) {
+            sum.setPaydate(resultSet.getString("paydate"));
+            sum.setSumOfExpenses(resultSet.getDouble("S"));
+        }
+        connection.close();
+        return sum;
     }
 
-    public List<ExpenseDto> getAllExpenses() throws SQLException {
+    public List<ExpensesWithReceiversDto> getReceiversWithExpenses() throws SQLException {
         Connection connection = dataSource.getConnection();
-        String query = "SELECT* FROM expenses";
+        String query = "SELECT name, SUM(value) AS S " +
+                "FROM receivers r, expenses e " +
+                "WHERE r.id = e.receiver " +
+                "GROUP BY name";
         ResultSet resultSet = connection.createStatement().executeQuery(query);
-        List<ExpenseDto> list = new ArrayList<>();
-        while (resultSet.next()){
-            ExpenseDto expenseDto = new ExpenseDto(resultSet.getInt("id"), resultSet.getString("paydate"),
-                    resultSet.getInt("receiver"), resultSet.getDouble("value"));
-            list.add(expenseDto);
+        List<ExpensesWithReceiversDto> list = new ArrayList<>();
+        while (resultSet.next()) {
+            list.add(new ExpensesWithReceiversDto(resultSet.getString("name"),resultSet.getDouble("S")));
         }
+        connection.close();
         return list;
+    }
+
+    public double getBiggestExpenseForDayWithBiggestSum() throws SQLException {
+        Connection connection = dataSource.getConnection();
+        String query = "SELECT result.m AS 'MAX AMOUNT OF EXPENSE' " +
+                "FROM (SELECT paydate, SUM(value) as s, MAX(value) as m " +
+                "      FROM expenses " +
+                "      GROUP BY paydate) result " +
+                "WHERE result.s IN (" +
+                "    SELECT max(s) " +
+                "    FROM (SELECT sum(value) AS s " +
+                "          FROM expenses " +
+                "          GROUP BY paydate) maxSum)";
+        ResultSet resultSet = connection.createStatement().executeQuery(query);
+        double expense = 0;
+        if (resultSet.next()) {
+            expense = resultSet.getDouble("MAX AMOUNT OF EXPENSE");
+        }
+        connection.close();
+        return expense;
     }
 
 }

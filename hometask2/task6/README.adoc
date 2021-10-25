@@ -4,16 +4,6 @@
 
 To run this application:
 
-Make maven clean and install
+* Make maven clean and install
 
-Edit `run.bat` file:
-
-* specify the right path to the !!`task4.jar`!!
-
-* apply arguments for `Expanse`: date: yyyy-MM-dd, receiver: id(int number) and value: 123,0(double)
-
-* final version of file should look like this:
-
-----
-java -jar "D:\java\projects\jd2_homework\hometask2\task4\target\task5.jar" "2020-11-12" 1 12345
-----
+* And run Main.java
