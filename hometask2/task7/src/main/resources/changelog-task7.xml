@@ -20,9 +20,6 @@
                 name VARCHAR(255),
                 PRIMARY KEY (id)
             );
-
-            INSERT INTO IF NOT EXISTS receivers(name)
-                VALUE ('DEFAULT_RECEIVER');
         </sql>
     </changeSet>
 
