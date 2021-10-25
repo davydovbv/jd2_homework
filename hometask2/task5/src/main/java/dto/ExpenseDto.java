@@ -13,6 +13,12 @@ public class ExpenseDto {
         this.value = value;
     }
 
+    public ExpenseDto(String date, int receiver, double value) {
+        this.date = date;
+        this.receiver = receiver;
+        this.value = value;
+    }
+
     public ExpenseDto() {
     }
 
