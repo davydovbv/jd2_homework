@@ -1,0 +1,6 @@
+= Home Task 3
+
+== Run
+
+* To run this application go to `run.bat` file and specify global path to project `hometask3.jar` file.
+* Then go to command line and type `run.bat`.
